@@ -10,9 +10,36 @@
     <p>
       <textarea rows="10" cols="80" id="input"> </textarea>
     <p>
+      <button type="button" onclick="convert();">
+        Submit
+      </button>
       <h2>result</h2>
       <div class="" id="result">
 
       </div>
+      <script>
+        function encode_text(text)
+        {
+          return text;
+        }
+        function check_password(password)
+        {
+          return password == "the spear is deadly";
+        }
+        function convert()
+        {
+          result = document.getElementById("result");
+          text = document.getElementById("input").value;
+          password = document.getElementById("password").value;
+          if (check_password(password))
+          {
+            text = encode_text(text);
+            result.innerHTML = text;
+          } else
+          {
+            result.innerHTML = "incorrect password";
+          }
+        }
+      </script>
   </body>
 </html>
