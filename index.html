@@ -18,8 +18,52 @@
 
       </div>
       <script>
+      function replaceHalfWithHomoglyphs(text) {
+      const homoglyphs = {
+          'A': ['А', 'Ꭺ'], 'B': ['Β', 'Ᏼ'], 'C': ['С', 'Ⅽ'], 'D': ['Ꭰ'], 'E': ['Ε', 'Е'],
+          'F': ['Ϝ'], 'G': ['Ꮐ'], 'H': ['Н'], 'I': ['І', 'Ⅰ'], 'J': ['Ј'],
+          'K': ['Κ', 'К'], 'L': ['Ꮮ'], 'M': ['Μ', 'М'], 'N': ['Ν'],
+          'O': ['Ο', 'О'], 'P': ['Ρ', 'Р'], 'Q': ['Ⴓ'], 'S': ['Ⴝ'],
+          'T': ['Τ', 'Т'], 'V': ['Ⅴ'], 'X': ['Χ', 'Х'],
+          'Y': ['Υ', 'У'], 'Z': ['Ζ'],
+          'a': ['а'], 'c': ['с'], 'e': ['е'],
+          'f': ['ƒ'], 'g': ['ɡ'], 'h': ['һ'], 'i': ['і'], 'j': ['ϳ', 'ј'],
+          'k': ['κ'], 'l': ['ⅼ'], 'm': ['ｍ'], 'n': ['ո'],
+          'o': ['о'], 'p': ['р'], 'q': ['ԛ'], 'r': ['r'], 's': ['ѕ'],
+          'u': ['ս'], 'v': ['ⅴ'], 'x': ['x'],
+          'y': ['у'], 'z': ['z']
+      };
+
+      if (!text || text.length === 0) {
+          return text; // Return empty string if no text is provided
+      }
+
+      let characters = text.split('');
+      let indexes = [...Array(characters.length).keys()]; // Create an array of indexes
+      let numToReplace = Math.floor(characters.length / 2);
+
+      // Randomly select half of the characters to replace
+      indexes = indexes.sort(() => Math.random() - 0.5).slice(0, numToReplace);
+
+      indexes.forEach(index => {
+          let char = characters[index];
+          if (homoglyphs[char]) {
+              let replacements = homoglyphs[char];
+              characters[index] = replacements[Math.floor(Math.random() * replacements.length)];
+          }
+      });
+
+      return characters.join('');
+  }
+
+        function insertZeroWidthSpace(text)
+        {
+          return text.split('').map(char => char + '\u200B').join('');
+        }
         function encode_text(text)
         {
+          text = replaceHalfWithHomoglyphs(text);
+          text = insertZeroWidthSpace(text);
           return text;
         }
         function check_password(password)
